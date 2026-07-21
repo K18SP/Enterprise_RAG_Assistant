@@ -1,0 +1,9 @@
+# For connecting folder with git
+git remote add "github_repo link"
+git branch -M main
+git push -u origin main
+
+# For push
+git add .
+git commit -m "Message"
+git push -u origin main
