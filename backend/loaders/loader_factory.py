@@ -8,27 +8,24 @@ from .md_loader import MarkdownLoader
 class LoaderFactory:
 
     # Added paths of all files
-    loaders = {
+    @staticmethod
+    def get_loader(extension: str):
 
-        ".pdf": PDFLoader(),
+        extension = extension.lower()
 
-        ".txt": TXTLoader(),
+        if extension == ".pdf":
+            return PDFLoader()
 
-        ".docx": DOCXLoader(),
+        if extension == ".txt":
+            return TXTLoader()
 
-        ".csv": CSVDocumentLoader(),
+        if extension == ".docx":
+            return DOCXLoader()
 
-        ".md": MarkdownLoader()
+        if extension == ".csv":
+            return CSVDocumentLoader()
 
-    }
+        if extension == ".md":
+            return MarkdownLoader()
 
-    @classmethod # Here we use class method it allows us to call LoaderFactory.get_loader(".pdf") directly without needing to create an object like factory = LoaderFactory().
-    def get_loader(cls,extension):
-
-        loader = cls.loaders.get(extension.lower()) # It looks up the lowercase file extension in your dictionary.
-
-        if loader is None:
-
-            raise ValueError(f"Unsupported file type: {extension}")
-        
-        return loader
+        raise ValueError(f"Unsupported file type: {extension}")

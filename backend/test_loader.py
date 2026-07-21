@@ -1,17 +1,29 @@
 from pathlib import Path
 from loaders.loader_factory import LoaderFactory
+from preprocessing.cleaner import TextCleaner
+from utils.logger import logger
 # import logging
 
-file_path = 'D:/resume/Kushal_Resume.pdf'
+file_path = 'data/resume.pdf'
 
 extension = Path(file_path).suffix # Extracts the file extension including the leading dot (e.g., '.pdf')
 
-loader = LoaderFactory.get_loader(extension) # Requests the matching instantiated loader object from the factory
+try:
+
+    loader = LoaderFactory.get_loader(extension) # Requests the matching instantiated loader object from the factory
+
+except Exception as e:
+
+    logger.error(e)
+
+    raise
 
 documents = loader.load(file_path) # Polymorphically executes the specific loader's parsing logic
 
+documents = TextCleaner.clean_documents(documents)
+
 # Log the total document count once outside the rendering loop
-# logger.info("Successfully loaded %d document pages from %s", len(documents), file_path)
+logger.info(f"Loaded {len(documents)} pages.")
 
 print("=" * 80)
 print(f"Total Pages Loaded : {len(documents)}")
