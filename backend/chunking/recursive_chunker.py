@@ -14,7 +14,7 @@ from .base_chunker import BaseChunker
 
 class RecursiveChunker(BaseChunker):
 
-    def __init__(self, chunk_size = 1000, chunk_overlap = 200):
+    def __init__(self, chunk_size = 500, chunk_overlap = 50):
         """
         Initializes the chunker with safe, logical token window constraints.
         """
