@@ -4,7 +4,8 @@ from loaders.loader_factory import LoaderFactory
 from preprocessing.cleaner import TextCleaner
 from chunking.chunk_factory import ChunkFactory
 
-file_path = "data/resume.pdf"
+# file_path = "data/resume.pdf"
+file_path = "data/sample.txt"
 
 loader = LoaderFactory.get_loader(Path(file_path).suffix)
 

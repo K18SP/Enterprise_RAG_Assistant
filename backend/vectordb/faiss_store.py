@@ -8,9 +8,9 @@ from embeddings.embedding_factory import EmbeddingFactory
 
 class FAISSStore(BaseVectorStore):
 
-    def __init__(self):
+    def __init__(self,embedding):
 
-        self.embedding = EmbeddingFactory.get_embedding()
+        self.embedding = embedding
 
         self.db = None
 
@@ -28,6 +28,10 @@ class FAISSStore(BaseVectorStore):
         )
 
         return self.db.similarity_search(query, k=k)
+
+    def mmr_search(self, query, k=5, fetch_k=20):
+
+        return self.db.max_marginal_relevance_search(query, k=k, fetch_k = fetch_k)
     
     def save(self):
 

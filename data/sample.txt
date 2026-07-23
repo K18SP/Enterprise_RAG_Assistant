@@ -1,0 +1,23 @@
+Machine Learning is a subset of AI.
+
+Machine Learning Algorithms include Decision Trees.
+
+Machine Learning Models are trained on datasets.
+
+Machine Learning can solve regression problems.
+
+Deep Learning uses Neural Networks.
+
+Computer Vision uses CNNs.
+
+Natural Language Processing uses Transformers.
+
+Reinforcement Learning uses rewards.
+
+Machine Learning is widely used in healthcare.
+
+Machine Learning is used in finance.
+
+Machine Learning is used in banking.
+
+Machine Learning is used in agriculture.

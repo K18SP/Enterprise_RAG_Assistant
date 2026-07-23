@@ -6,11 +6,14 @@ from preprocessing.cleaner import TextCleaner
 
 from chunking.chunk_factory import ChunkFactory
 
+from embeddings.embedding_factory import EmbeddingFactory
+
 from vectordb.vectorstore_factory import (
     VectorStoreFactory
 )
 
-file_path = "data/resume.pdf"
+# file_path = "data/resume.pdf"
+file_path = "data/sample.txt"
 
 loader = LoaderFactory.get_loader(
     Path(file_path).suffix
@@ -26,7 +29,9 @@ chunker = ChunkFactory.get_chunker()
 
 chunks = chunker.split(documents)
 
-vector_db = VectorStoreFactory.get_vectorstore()
+embedding = EmbeddingFactory.get_embedding()
+
+vector_db = VectorStoreFactory.get_vectorstore(embedding)
 
 vector_db.add_documents(chunks)
 

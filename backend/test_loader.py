@@ -4,7 +4,8 @@ from preprocessing.cleaner import TextCleaner
 from utils.logger import logger
 # import logging
 
-file_path = 'data/resume.pdf'
+# file_path = 'data/resume.pdf'
+file_path = "data/sample.txt"
 
 extension = Path(file_path).suffix # Extracts the file extension including the leading dot (e.g., '.pdf')
 
