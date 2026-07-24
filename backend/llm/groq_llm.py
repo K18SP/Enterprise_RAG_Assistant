@@ -9,6 +9,11 @@ from config.constants import (
     TEMPERATURE
 )
 
+from utils.logger import setup_logger
+from exceptions.llm_exception import LLMError
+
+logger = setup_logger(__name__)
+
 class GroqLLM(BaseLLM):
 
 # Here temperature is decoding parameter that controls the randomness of token selection
@@ -22,8 +27,20 @@ class GroqLLM(BaseLLM):
 
     def generate(self, query:str, context:str) -> str:
 
+        logger.info(f"Generating LLM response using {LLM_MODEL}")
+
         prompt = PromptBuilder.build_prompt(query = query, context = context)
 
-        response = self.llm.invoke(prompt)
 
-        return response.content
+        try:
+
+            response = self.llm.invoke(prompt)
+
+            logger.info("LLM response generated successfully.")
+
+            return response.content
+
+        except Exception as e:
+
+            logger.exception("Failed to generate response from the language model")
+            raise LLMError("Failed to generate response from the language model") from e

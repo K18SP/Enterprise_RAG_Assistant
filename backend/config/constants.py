@@ -19,3 +19,5 @@ RETRIEVE_TOP_K = 10
 RERANK_TOP_K = 5
 
 VECTOR_DB_PATH = "models/faiss_index"
+
+VECTOR_DB_SAVE_PATH = 'data/vector_db'

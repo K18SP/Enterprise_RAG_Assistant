@@ -5,6 +5,10 @@ from llm.context_builder import ContextBuilder
 from schemas.rag_response import RAGResponse
 from mappers.document_mapper import DocumentMapper
 
+from utils.logger import setup_logger
+
+logger = setup_logger(__name__)
+
 class RAGPipeline:
 
     def __init__(self, retriever: BaseRetriever, reranker: BaseReranker, llm: BaseLLM):
@@ -27,13 +31,17 @@ class RAGPipeline:
 
         #Step 1 - Retrieve relevant documents
         retrieved_documents = self.retriever.retrieve(query = query, k=retrieve_k)
+        logger.info(f"Processing query: {query}")
 
         retrieved_cnt = len(retrieved_documents)
+        logger.info(f"Retrieved {retrieved_cnt} document(s).")
 
         #Step 2 - Rerank retrieved documents
         reranked_documents = self.reranker.rerank(query = query, documents = retrieved_documents, top_k = rerank_k)
 
         reranked_cnt = len(reranked_documents)
+
+        logger.info( f"Reranked to {reranked_cnt} document(s).")
 
         # Convert internal documents to response schemas
         response_documents = DocumentMapper.to_schema_list(reranked_documents)
@@ -42,7 +50,10 @@ class RAGPipeline:
         context = ContextBuilder.build_context(reranked_documents)
 
         #Step 4 - Generate final answer
+        logger.info("Generating response using LLM.")
         answer = self.llm.generate(query=query, context = context)
+
+        logger.info("Successfully generated response.")
 
         return RAGResponse(
             query=query,
