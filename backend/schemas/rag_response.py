@@ -1,9 +1,16 @@
-from pydantic import BaseModel
+from typing import Any
+
+from pydantic import BaseModel, Field
 
 from .retrieved_document import RetrievedDocument
 
+from schemas.rag_metadata import RAGMetadata
+
 
 class RAGResponse(BaseModel):
+    """
+    Response returned by the RAG pipeline.
+    """
 
     query: str
 
@@ -13,4 +20,4 @@ class RAGResponse(BaseModel):
 
     documents: list[RetrievedDocument]
 
-    metadata: dict
+    metadata: RAGMetadata

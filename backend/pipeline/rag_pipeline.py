@@ -14,19 +14,34 @@ class RAGPipeline:
         self.llm = llm
 
     def ask(self, query:str, retrieve_k: int=10, rerank_k: int=5) -> RAGResponse:
+        """
+        Execute the complete RAG pipeline.
 
-        #Step 1
-        documents = self.retriever.retrieve(query = query, k=retrieve_k)
+        Steps:
+        1. Retrieve relevant documents
+        2. Rerank retrieved documents
+        3. Build LLM context
+        4. Generate answer
+        5. Return structured response
+        """
 
-        #Step 2
-        documents = self.reranker.rerank(query = query, documents = documents, top_k = rerank_k)
+        #Step 1 - Retrieve relevant documents
+        retrieved_documents = self.retriever.retrieve(query = query, k=retrieve_k)
 
-        response_documents = DocumentMapper.to_response_list(documents)
+        retrieved_cnt = len(retrieved_documents)
 
-        #Step 3
-        context = ContextBuilder.build_context(documents)
+        #Step 2 - Rerank retrieved documents
+        reranked_documents = self.reranker.rerank(query = query, documents = retrieved_documents, top_k = rerank_k)
 
-        #Step 4
+        reranked_cnt = len(reranked_documents)
+
+        # Convert internal documents to response schemas
+        response_documents = DocumentMapper.to_schema_list(reranked_documents)
+
+        #Step 3 - Build context for the LLM
+        context = ContextBuilder.build_context(reranked_documents)
+
+        #Step 4 - Generate final answer
         answer = self.llm.generate(query=query, context = context)
 
         return RAGResponse(
@@ -35,7 +50,13 @@ class RAGPipeline:
             context=context,
             documents=response_documents,
             metadata={
-                "retrieved_documents": retrieve_k,
-                "reranked_documents": rerank_k
+                "retrieval": {
+                    "requested": retrieve_k,
+                    "returned": retrieved_cnt
+                },
+                "reranking": {
+                    "requested": rerank_k,
+                    "returned": reranked_cnt
+                }
             }
         )

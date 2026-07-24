@@ -5,21 +5,18 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from .base_embedding import BaseEmbedding
 
 
-class HuggingFaceEmbedding(BaseEmbedding):
+class HuggingFaceEmbedding:
 
     def __init__(
         self,
-        model_name="BAAI/bge-small-en-v1.5"
+        model_name: str
     ):
 
         self.embedding = HuggingFaceEmbeddings(
-
             model_name=model_name,
-
             model_kwargs={
                 "device": "cpu"
             },
-
             encode_kwargs={
                 "normalize_embeddings": True
             }

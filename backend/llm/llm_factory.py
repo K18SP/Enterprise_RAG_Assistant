@@ -1,9 +1,10 @@
 from .groq_llm import GroqLLM
+from config.constants import LLM_PROVIDER
 
 class LLMFactory:
 
     @staticmethod
-    def get_llm(provider:str='groq', **kwargs):
+    def get_llm(provider:str=LLM_PROVIDER):
 
         provider = provider.lower()
 

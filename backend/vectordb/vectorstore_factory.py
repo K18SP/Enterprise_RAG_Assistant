@@ -1,4 +1,7 @@
 from .faiss_store import FAISSStore
+from .base_vectorstore import BaseVectorStore
+
+from config.constants import VECTORSTORE
 
 
 class VectorStoreFactory:
@@ -6,10 +9,12 @@ class VectorStoreFactory:
     @staticmethod
     def get_vectorstore(
         embedding,
-        vectorstore="faiss"
-    ):
+        vectorstore=VECTORSTORE
+    )-> BaseVectorStore:
 
-        if vectorstore.lower() == "faiss":
+        vectorstore = vectorstore.lower()
+
+        if vectorstore == "faiss":
 
             return FAISSStore(embedding)
 
