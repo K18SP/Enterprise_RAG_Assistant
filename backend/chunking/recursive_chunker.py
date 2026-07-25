@@ -6,8 +6,8 @@ from .base_chunker import BaseChunker
 
 # Recursive Chunker
 """
-
--> Tries larger structural boundaries first, falling back to smaller
+-> It uses a prioritized list of separators to divide the text. f a chunk is still too big, it moves to the next smaller separator.
+-> It keeps paragraphs and sentences whole, protecting the natural meaning of the text.
 -> It's primary use is RAG applications
 
 """
