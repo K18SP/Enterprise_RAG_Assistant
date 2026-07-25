@@ -1,10 +1,13 @@
-from functools import lru_cache
+from fastapi import Request
+
 from services.rag_service import RAGService
 
-@lru_cache
-def get_rag_service() -> RAGService:
+
+def get_rag_service(
+    request: Request
+) -> RAGService:
     """
-    Returns a singleton RAGService.
+    Return the singleton RAG service stored in FastAPI state.
     """
 
-    return RAGService()
+    return request.app.state.rag_service

@@ -1,7 +1,7 @@
-from .base_exception import RAGException
+from .base_exception import BaseCustomException
 
 
-class RetrieverError(RAGException):
+class RetrieverError(BaseCustomException):
     """
     Raised when document retrieval fails.
     """

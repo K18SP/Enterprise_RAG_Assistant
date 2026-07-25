@@ -1,7 +1,7 @@
-from .base_exception import RAGException
+from .base_exception import BaseCustomException
 
 
-class RerankerError(RAGException):
+class RerankerError(BaseCustomException):
     """
     Raised when reranking fails.
     """

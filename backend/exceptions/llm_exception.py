@@ -1,7 +1,7 @@
-from .base_exception import RAGException
+from .base_exception import BaseCustomException
 
 
-class LLMError(RAGException):
+class LLMError(BaseCustomException):
     """
     Raised when the language model fails.
     """

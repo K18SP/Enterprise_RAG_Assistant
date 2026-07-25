@@ -1,6 +1,10 @@
-class RAGException(Exception):
+class BaseCustomException(Exception):
     """
-    Base exception for the RAG application.
+    Base class for all application exceptions.
     """
 
-    pass
+    def __init__(self, message: str):
+
+        self.message = message
+
+        super().__init__(message)

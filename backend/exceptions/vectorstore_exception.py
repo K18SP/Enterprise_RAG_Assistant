@@ -1,7 +1,7 @@
-from .base_exception import RAGException
+from .base_exception import BaseCustomException
 
 
-class VectorStoreError(RAGException):
+class VectorStoreError(BaseCustomException):
     """
     Raised when vector database operations fail.
     """

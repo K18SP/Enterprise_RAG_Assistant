@@ -1,7 +1,7 @@
-from .base_exception import RAGException
+from .base_exception import BaseCustomException
 
 
-class PipelineError(RAGException):
+class PipelineError(BaseCustomException):
     """
     Raised when the RAG pipeline execution fails.
     """
