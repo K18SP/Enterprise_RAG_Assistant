@@ -1,19 +1,21 @@
-from evaluation.evaluators.dummy_evaluator import DummyEvaluator
+from evaluation.evaluators.latency_evaluator import LatencyEvaluator
+from evaluation.evaluators.retrieval_evaluator import RetrievalEvaluator
 
+from evaluation.pipeline.evaluation_pipeline import EvaluationPipeline
 
 class EvaluatorFactory:
 
     @staticmethod
-    def get_evaluator(
-        evaluator: str = "dummy"
-    ):
+    def create_pipeline():
 
-        evaluator = evaluator.lower()
+        evaluators = [
 
-        if evaluator == "dummy":
+            RetrievalEvaluator(),
 
-            return DummyEvaluator()
+            LatencyEvaluator()
 
-        raise ValueError(
-            f"Unsupported evaluator: {evaluator}"
+        ]
+
+        return EvaluationPipeline(
+            evaluators
         )

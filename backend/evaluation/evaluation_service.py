@@ -8,41 +8,14 @@ logger = setup_logger(__name__)
 
 class EvaluationService:
 
-    def __init__(
-        self,
-        evaluator: str = "dummy"
-    ):
+    def __init__(self):
 
-        logger.info(
-            "Initializing Evaluation Service."
+        self.pipeline = (
+            EvaluatorFactory.create_pipeline()
         )
 
-        self.evaluator = (
-            EvaluatorFactory.get_evaluator(
-                evaluator
-            )
-        )
+    def evaluate(self, **kwargs):
 
-        logger.info(
-            "Evaluation Service initialized."
-        )
-
-
-    def evaluate(
-        self,
-        **kwargs
-    ):
-
-        logger.info(
-            "Running evaluation."
-        )
-
-        report = self.evaluator.evaluate(
+        return self.pipeline.evaluate(
             **kwargs
         )
-
-        logger.info(
-            "Evaluation completed."
-        )
-
-        return report
