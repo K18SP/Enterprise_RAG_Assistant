@@ -10,9 +10,9 @@ class RAGService:
     Service layer responsible for interacting with the RAG pipeline.
     This class acts as the bridge between the API layer and the underlying RAG pipeline.
     """
-    def __init__(self):
+    def __init__(self,vector_db = None):
         logger.info("Initializing RAG Service.")
-        self.pipeline = PipelineFactory.create_pipeline()
+        self.pipeline = PipelineFactory.create_pipeline(vector_db=vector_db)
         logger.info("RAG Service initialized successfully.")
 
     def ask(self, query: str, retrieve_k: int, rerank_k: int) -> RAGResponse:

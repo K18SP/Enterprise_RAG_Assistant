@@ -17,16 +17,20 @@ from config.constants import (
 class PipelineFactory:
 
     @staticmethod
-    def create_pipeline():
+    def create_pipeline(vector_db = None):
 
-        #Create embedding model
-        embedding = EmbeddingFactory.get_embedding(provider=EMBEDDING_PROVIDER)
+        if vector_db is None:
 
-        #Create vector database
-        vector_db = VectorStoreFactory.get_vectorstore(embedding=embedding, vectorstore=VECTORSTORE)
+            embedding = EmbeddingFactory.get_embedding(
+                EMBEDDING_PROVIDER
+            )
 
-        #Load existing FAISS index
-        vector_db.load()
+            vector_db = VectorStoreFactory.get_vectorstore(
+                embedding=embedding,
+                vectorstore=VECTORSTORE
+            )
+
+            vector_db.load()
 
         #Create retriever
         retriever = RetrieverFactory.get_retriever(vector_db,RETRIEVER)

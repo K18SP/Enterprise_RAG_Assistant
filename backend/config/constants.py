@@ -29,3 +29,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 
 VECTOR_DB_SAVE_PATH = DATA_DIR / "vector_db"
+
+UPLOAD_DIR = DATA_DIR / "uploads"
+
+CHUNKING_STRATEGY = "recursive"
+
+DOCUMENT_REGISTRY_PATH = DATA_DIR / "document_registry.json"

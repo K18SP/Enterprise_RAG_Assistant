@@ -7,6 +7,8 @@ from schemas.api_error import APIError, ErrorDetail
 
 from utils.logger import setup_logger
 
+from exceptions.document_not_found_exception import DocumentNotFoundError
+
 logger = setup_logger(__name__)
 
 
@@ -52,4 +54,26 @@ def register_exception_handlers(app: FastAPI):
         return JSONResponse(
             status_code=500,
             content=response.model_dump()
+        )
+
+    #HandlingDocumentNotFoundException
+    @app.exception_handler(DocumentNotFoundError)
+    async def document_not_found_handler(
+        request: Request,
+        exc: DocumentNotFoundError
+    ):
+
+        logger.warning(
+            f"DocumentNotFoundError: {exc}"
+        )
+
+        return JSONResponse(
+            status_code=404,
+            content={
+                "success": False,
+                "error": {
+                    "type": "DOCUMENT_NOT_FOUND",
+                    "message": str(exc)
+                }
+            }
         )

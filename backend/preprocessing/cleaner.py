@@ -39,6 +39,9 @@ class TextCleaner:
 
             cleaned_text = TextCleaner.clean_text(doc.page_content)
 
+            if not cleaned_text.strip():
+                continue
+
             cleaned_docs.append(
                 Document(
                     page_content = cleaned_text,
