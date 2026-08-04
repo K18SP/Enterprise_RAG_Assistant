@@ -7,17 +7,26 @@ class EvaluationPipeline:
 
         self.evaluators = evaluators
 
-
     def evaluate(self, **kwargs):
 
         reports = []
 
         for evaluator in self.evaluators:
 
-            report = evaluator.evaluate(
-                **kwargs
-            )
+            try:
 
-            reports.append(report)
+                report = evaluator.evaluate(
+                    **kwargs
+                )
+
+                reports.append(report)
+
+            except TypeError:
+                """
+                Evaluator doesn't require the
+                supplied arguments.
+                """
+
+                continue
 
         return reports
