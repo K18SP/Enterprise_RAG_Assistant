@@ -10,6 +10,8 @@ class BenchmarkCase(BaseModel):
 
     expected_answer: str | None = None
 
+    expected_keywords: List[str] = []
+
 """
 Example;
 
