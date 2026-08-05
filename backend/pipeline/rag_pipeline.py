@@ -216,6 +216,11 @@ class RAGPipeline:
                             2
                         ),
 
+                        context_ms=round(
+                            context_ms,
+                            2
+                        ),
+
                         total_ms=round(
                             total_ms,
                             2

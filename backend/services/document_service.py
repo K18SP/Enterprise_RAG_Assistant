@@ -10,7 +10,6 @@ from utils.logger import setup_logger
 from schemas.delete_response import DeleteResponse
 
 from config.constants import (
-    UPLOAD_DIR,
     CHUNKING_STRATEGY
 )
 
@@ -56,7 +55,7 @@ class DocumentService:
 
         self.workspace = workspace
 
-        self.upload_dir = Path(UPLOAD_DIR)
+        self.upload_dir = workspace.upload_path
 
         self.upload_dir.mkdir(
             parents=True,

@@ -14,6 +14,8 @@ from services.document_registry import DocumentRegistry
 from services.document_service import DocumentService
 from services.rag_service import RAGService
 
+from database.init_db import initialize_database
+
 from config.constants import (
     EMBEDDING_PROVIDER,
     VECTORSTORE
@@ -31,16 +33,42 @@ async def lifespan(app: FastAPI):
     logger.info("Starting Enterprise RAG API...")
 
     # ---------------------------------------
-    # STEP 1 : Create User Workspace
+    # STEP 1 : Initialize Database
     # ---------------------------------------
 
-    # Later:
+    try:
+
+        logger.info(
+            "Initializing database..."
+        )
+
+        initialize_database()
+
+        logger.info(
+            "Database initialized successfully."
+        )
+
+    except Exception:
+
+        logger.exception(
+            "Database initialization failed."
+        )
+
+        raise
+
+    # ---------------------------------------
+    # STEP 2 : Create User Workspace
+    # ---------------------------------------
+
+    # Temporary workspace.
+    # Later this will become:
+    #
     # workspace = UserWorkspace(current_user.username)
 
     workspace = UserWorkspace("default")
 
     # ---------------------------------------
-    # STEP 2 : Create Embedding Model
+    # STEP 3 : Load Embedding Model
     # ---------------------------------------
 
     embedding = EmbeddingFactory.get_embedding(
@@ -48,7 +76,7 @@ async def lifespan(app: FastAPI):
     )
 
     # ---------------------------------------
-    # STEP 3 : Create User Vector Database
+    # STEP 4 : Create Vector Database
     # ---------------------------------------
 
     vector_db = VectorStoreFactory.get_vectorstore(
@@ -62,7 +90,7 @@ async def lifespan(app: FastAPI):
     )
 
     # ---------------------------------------
-    # STEP 4 : Load Existing FAISS
+    # STEP 5 : Load Existing Vector Database
     # ---------------------------------------
 
     if vector_db.exists():
@@ -76,12 +104,16 @@ async def lifespan(app: FastAPI):
     else:
 
         logger.info(
-            "No vector database found. "
-            "A new index will be created after first upload."
+            "No existing vector database found."
+        )
+
+        logger.info(
+            "A new vector database will be created "
+            "after the first document upload."
         )
 
     # ---------------------------------------
-    # STEP 5 : Create Document Registry
+    # STEP 6 : Create Document Registry
     # ---------------------------------------
 
     document_registry = DocumentRegistry(
@@ -91,7 +123,7 @@ async def lifespan(app: FastAPI):
     )
 
     # ---------------------------------------
-    # STEP 6 : Create Services
+    # STEP 7 : Initialize Services
     # ---------------------------------------
 
     app.state.rag_service = RAGService(
@@ -121,8 +153,14 @@ async def lifespan(app: FastAPI):
     # ---------------------------------------
 
     logger.info(
-        "Cleaning up resources..."
+        "Cleaning up application resources..."
     )
+
+    # Future cleanup:
+    #
+    # vector_db.close()
+    # redis.close()
+    # qdrant_client.close()
 
     logger.info(
         "Enterprise RAG API stopped."
@@ -140,6 +178,7 @@ app = FastAPI(
     lifespan=lifespan
 
 )
+
 
 register_exception_handlers(app)
 

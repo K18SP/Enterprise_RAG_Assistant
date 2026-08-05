@@ -1,9 +1,4 @@
-from .faiss_store import FAISSStore
-from .base_vectorstore import BaseVectorStore
-
-from config.constants import VECTORSTORE
-
-from config.constants import VECTOR_DB_SAVE_PATH
+from vectordb.faiss_store import FAISSStore
 
 
 class VectorStoreFactory:
@@ -11,15 +6,19 @@ class VectorStoreFactory:
     @staticmethod
     def get_vectorstore(
         embedding,
-        vectorstore=VECTORSTORE
-    )-> BaseVectorStore:
+        vectorstore,
+        save_path
+    ):
 
         vectorstore = vectorstore.lower()
 
         if vectorstore == "faiss":
 
-            return FAISSStore(embedding = embedding,save_path = VECTOR_DB_SAVE_PATH)
+            return FAISSStore(
+                embedding=embedding,
+                save_path=save_path
+            )
 
         raise ValueError(
-            f"Unsupported Vector Store: {vectorstore}"
+            f"Unsupported vector store: {vectorstore}"
         )
