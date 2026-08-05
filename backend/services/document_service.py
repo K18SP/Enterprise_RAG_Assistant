@@ -47,11 +47,14 @@ class DocumentService:
     def __init__(
         self,
         vector_db,
-        document_registry
+        document_registry,
+        workspace
     ):
 
         self.vector_db = vector_db
         self.document_registry = document_registry
+
+        self.workspace = workspace
 
         self.upload_dir = Path(UPLOAD_DIR)
 

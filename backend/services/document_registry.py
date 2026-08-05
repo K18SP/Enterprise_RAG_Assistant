@@ -25,7 +25,10 @@ class DocumentRegistry:
         # does not exist.
         if not self.registry_path.exists():
 
-            self._write({})
+            self.registry_path.write_text(
+                "{}",
+                encoding = "utf-8"
+                )
 
             logger.info(
                 f"Created document registry at "

@@ -24,14 +24,20 @@ VECTOR_DB_PATH = "models/faiss_index"
 
 # VECTOR_DB_SAVE_PATH = 'data/vector_db'
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+# PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
-DATA_DIR = PROJECT_ROOT / "data"
+# DATA_DIR = PROJECT_ROOT / "data"
+
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+DATA_DIR = BASE_DIR / "data"
 
 VECTOR_DB_SAVE_PATH = DATA_DIR / "vector_db"
 
-UPLOAD_DIR = DATA_DIR / "uploads"
+# UPLOAD_DIR = DATA_DIR / "uploads"
 
 CHUNKING_STRATEGY = "recursive"
 
-DOCUMENT_REGISTRY_PATH = DATA_DIR / "document_registry.json"
+# DOCUMENT_REGISTRY_PATH = DATA_DIR / "document_registry.json"
