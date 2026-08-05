@@ -7,6 +7,14 @@ from fastapi import Header
 
 from services.user_workspace import UserWorkspace
 
+from fastapi import Depends
+
+from sqlalchemy.orm import Session
+
+from database.database import get_db
+
+from auth.auth_service import AuthService
+
 
 def get_rag_service(
     request: Request
@@ -32,4 +40,16 @@ def get_workspace(
 
     return UserWorkspace(
         x_user_id
+    )
+
+def get_auth_service(
+
+    db: Session = Depends(
+        get_db
+    )
+
+) -> AuthService:
+
+    return AuthService(
+        db
     )

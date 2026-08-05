@@ -14,6 +14,8 @@ from services.document_registry import DocumentRegistry
 from services.document_service import DocumentService
 from services.rag_service import RAGService
 
+from api.auth_routes import router as auth_router
+
 from database.init_db import initialize_database
 
 from config.constants import (
@@ -184,6 +186,8 @@ register_exception_handlers(app)
 
 app.include_router(rag_router)
 app.include_router(document_router)
+
+app.include_router(auth_router)
 
 
 @app.get("/")
