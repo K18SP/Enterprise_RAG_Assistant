@@ -4,6 +4,8 @@ from evaluation.evaluators.generation_evaluator import GenerationEvaluator
 
 from evaluation.pipeline.evaluation_pipeline import EvaluationPipeline
 
+from evaluation.evaluators.ragas_evaluator import RAGASEvaluator
+
 
 class EvaluatorFactory:
 
@@ -18,7 +20,9 @@ class EvaluatorFactory:
 
                 LatencyEvaluator(),
 
-                GenerationEvaluator()
+                GenerationEvaluator(),
+
+                RAGASEvaluator(),
 
             ]
 
